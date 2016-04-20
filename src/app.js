@@ -80,13 +80,13 @@ class App extends React.Component {
   componentDidMount() {
     this.state = {timer: setTimeout(() => {
       clearTimeout(this.state.timer);
-      Actions.Main();
+      Actions.main();
     }, 5000)};
   }
   render() {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text onPress={Actions.Main}>
+        <Text onPress={Actions.main}>
         App!!!
         </Text>
       </View>
@@ -116,15 +116,16 @@ export default function app(platform) {
         <Router hideNavBar={true} sceneStyle={{backgroundColor:'#F7F7F7'}}>
           <Scene key="root">
             <Scene key="App" component={App} title="App" initial={true} />
+            <Scene key="main" title="main" iconName={"home"} icon={TabIcon} hideNavBar={false} component={Main} />
+            {/*
             <Scene key="Tabbar" tabs={true} default="Main">
               <Scene key="Main" title="main" iconName={"home"} icon={TabIcon} hideNavBar={false} component={Main} initial={true} />
-            {/*
-            <Scene key="Login" component={fn('Login')} title="Login" type="replace" />
-            <Scene key="Subview" component={fn('Subview')} title="Subview" />
+              <Scene key="Login" component={fn('Login')} title="Login" type="replace" />
+              <Scene key="Subview" component={fn('Subview')} title="Subview" />
               <Scene key="Logout" title="logout" icon={TabIcon} iconName={"sign-out"} hideNavBar={true} component={fn('Logout')} />
               <Scene key="Profile" title="profile" icon={TabIcon} iconName={"gear"} hideNavBar={true} component={fn('Profile')}/>
-            */}
             </Scene>
+            */}
           </Scene>
         </Router>
       );
