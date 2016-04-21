@@ -52,7 +52,7 @@ import RNRF, {
  * Add icon support for use in Tabbar
  *
  */
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 /**
 * ## TabIcon
@@ -62,11 +62,13 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 class TabIcon extends React.Component {
   render(){
-    const color = this.props.selected ? '#FF3366' : '#FFB3B3';
+    const color = this.props.selected ? '#ee3124' : '#555';
     return (
-      <View style={{flex:1, flexDirection:'column', alignItems:'center', alignSelf:'center'}}>
+      <View style={{flex:1, justifyContent:'center', alignItems:'center', alignSelf:'center'}}>
         <Icon style={{color}} name={this.props.iconName} size={30} />
+        {/*
         <Text style={{color}}>{this.props.title}</Text>
+        */}
       </View>
       );
   }
@@ -76,59 +78,55 @@ class TabIcon extends React.Component {
  * ## Native
  */
 
-class App extends React.Component {
-  componentDidMount() {
-    this.state = {timer: setTimeout(() => {
-      clearTimeout(this.state.timer);
-      Actions.main();
-    }, 5000)};
-  }
-  render() {
-    return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text onPress={Actions.main}>
-        App!!!
-        </Text>
-      </View>
-    );
-  }
-}
+// class App extends React.Component {
+//   componentDidMount() {
+//     this.state = {timer: setTimeout(() => {
+//       clearTimeout(this.state.timer);
+//       Actions.main();
+//     }, 5000)};
+//   }
+//   render() {
+//     return (
+//       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+//         <Text onPress={Actions.main}>
+//         App!!!
+//         </Text>
+//       </View>
+//     );
+//   }
+// }
 
-class Main extends React.Component {
-  render() {
-    return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>
-        Main!!!
-        </Text>
-      </View>
-    );
-  }
-}
+// Scene
+const scenes = Actions.create(
+  <Scene key="root">
+    <Scene key="Launch" component={Launch} title="App" initial={true} />
+    <Scene key="Tabbar" tabs={true} default="Main" initial={!true} style={{ backgroundColor: '#fff' }} type='replace'>
+      <Scene key="Main" iconName={"location-on"} icon={TabIcon} component={Main} />
+      <Scene key="Main3" iconName={"star"} icon={TabIcon} hideNavBar={false} component={Main} />
+      <Scene key="Main2" iconName={"history"} icon={TabIcon} hideNavBar={false} component={Main} />
+      <Scene key="Main4" iconName={"account-circle"} icon={TabIcon} hideNavBar={false} component={Main} />
+    {/*
+      <Scene key="Main" title="main" iconName={"home"} icon={TabIcon} hideNavBar={false} component={Main} initial={true} />
+      <Scene key="Login" component={fn('Login')} title="Login" type="replace" />
+      <Scene key="Subview" component={fn('Subview')} title="Subview" />
+      <Scene key="Logout" title="logout" icon={TabIcon} iconName={"sign-out"} hideNavBar={true} component={fn('Logout')} />
+      <Scene key="Profile" title="profile" icon={TabIcon} iconName={"gear"} hideNavBar={true} component={fn('Profile')}/>
+    */}
+    </Scene>
+  </Scene>
+)
 
-export default function app(platform) {
+// Components
+import Launch from './components/Launch';
+import Main from './components/Main';
+
+export default function app(platform: string) {
 
   // TODO initialize store
   let WonderFUEL = React.createClass( {
     render() {
       // setup the router table with App selected as the initial component
-      return (
-        <Router hideNavBar={true} sceneStyle={{backgroundColor:'#F7F7F7'}}>
-          <Scene key="root">
-            <Scene key="App" component={App} title="App" initial={true} />
-            <Scene key="main" title="main" iconName={"home"} icon={TabIcon} hideNavBar={false} component={Main} />
-            {/*
-            <Scene key="Tabbar" tabs={true} default="Main">
-              <Scene key="Main" title="main" iconName={"home"} icon={TabIcon} hideNavBar={false} component={Main} initial={true} />
-              <Scene key="Login" component={fn('Login')} title="Login" type="replace" />
-              <Scene key="Subview" component={fn('Subview')} title="Subview" />
-              <Scene key="Logout" title="logout" icon={TabIcon} iconName={"sign-out"} hideNavBar={true} component={fn('Logout')} />
-              <Scene key="Profile" title="profile" icon={TabIcon} iconName={"gear"} hideNavBar={true} component={fn('Profile')}/>
-            </Scene>
-            */}
-          </Scene>
-        </Router>
-      );
+      return <Router scenes={scenes} hideNavBar={true} sceneStyle={{backgroundColor:'#F7F7F7'}} />
     }
   });
   /**
