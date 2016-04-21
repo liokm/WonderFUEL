@@ -12,20 +12,25 @@ import React, {
 
 import { Actions } from 'react-native-router-flux';
 // import Icon from 'react-native-vector-icons/MaterialIcons';
+import { uistore } from '../stores';
+import { observer } from 'mobx-react/native';
 
-export default class Launch extends React.Component {
-  componentDidMount() {
-    // TODO
-    this.state = {timer: setTimeout(() => {
-      clearTimeout(this.state.timer);
-      Actions.Tabbar();
-    }, 2000)};
-  }
+@observer
+class Launch extends React.Component {
+  // componentDidMount() {
+  //   // TODO
+  //   this.state = {timer: setTimeout(() => {
+  //     clearTimeout(this.state.timer);
+  //     Actions.Tabbar();
+  //   }, 2000)};
+  // }
 
   render() {
+    const { width, height } = this.props;
+
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{fontSize: 28}} onPress={Actions.Tabbar}>
+      <View style={{flex: 1, borderColor:'red', borderWidth:1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={{fontSize: 18}} onPress={Actions.Tabbar}>
         WonderFUEL
         </Text>
       {/*
@@ -41,3 +46,5 @@ export default class Launch extends React.Component {
     )
   }
 }
+
+export default Launch;

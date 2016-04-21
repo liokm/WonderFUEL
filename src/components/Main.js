@@ -13,24 +13,39 @@ import React, {
 import Actions from 'react-native-router-flux';
 // import Icon from 'react-native-vector-icons/MaterialIcons';
 import MapView from 'react-native-maps';
+import { observer } from 'mobx-react/native';
 
-export default class Main extends React.Component {
-  componentDidMount() {
+@observer
+class Main extends React.Component {
+  constructor() {
+    super();
+    // TODO: Depends on network speed
+    // this.updateRegion = debounce(this.updateRegion, 500);
   }
 
+  updateRegion = x => this.props.region.update(x);
+
   render() {
-    // TODO: fill in the initial state
+    // TODO: Fix TabBar height
+    const { region } = this.props;
     return (
       <View style={{flex: 1}}>
         <MapView style={{flex: 1}}
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-        />
+          region={region}
+          onRegionChangeComplete={ this.updateRegion }>
+
+          {region.stations.map((marker, i) => (
+            <MapView.Marker
+            coordinate={{latitude: marker.location.lat, longitude: marker.location.lng}}
+            title={marker.name}
+            description={marker.vicinity}
+            key={i}
+            />
+          ))}
+        </MapView>
       </View>
     )
   }
 }
+
+export default Main;

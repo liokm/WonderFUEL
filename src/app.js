@@ -43,7 +43,7 @@ import RNRF, {
  * TODO
  *  - store to react to device info (general info/display/network)
  */
-//import {observer} from 'mobx-react/native';
+import { observer, observable } from 'mobx-react/native';
 //import store from './store';
 
 /**
@@ -78,41 +78,26 @@ class TabIcon extends React.Component {
  * ## Native
  */
 
-// class App extends React.Component {
-//   componentDidMount() {
-//     this.state = {timer: setTimeout(() => {
-//       clearTimeout(this.state.timer);
-//       Actions.main();
-//     }, 5000)};
-//   }
-//   render() {
-//     return (
-//       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-//         <Text onPress={Actions.main}>
-//         App!!!
-//         </Text>
-//       </View>
-//     );
-//   }
-// }
-
+import { uistore } from './stores';
 
 // Components
 import Launch from './components/Launch';
 import Main from './components/Main';
 import Input from './components/Input';
+import Love from './components/Love';
 
-const initial = Input;
+
+const initial = Launch;
 // Scene
 const scenes = Actions.create(
   <Scene key="root">
     <Scene key="Input" component={Input} initial={initial==Input} />
-    <Scene key="Launch" component={Launch} title="App" initial={initial==Launch} />
-    <Scene key="Tabbar" tabs={true} default="Main" initial={!true} style={{ backgroundColor: '#fff' }} type='replace'>
-      <Scene key="Main" iconName={"location-on"} icon={TabIcon} component={Main} />
-      <Scene key="Main3" iconName={"star"} icon={TabIcon} hideNavBar={false} component={Main} />
-      <Scene key="Main2" iconName={"history"} icon={TabIcon} hideNavBar={false} component={Main} />
-      <Scene key="Main4" iconName={"account-circle"} icon={TabIcon} hideNavBar={false} component={Main} />
+    <Scene key="Launch" component={Launch} hideNavBar={true} title="WonderFUEL" initial={initial==Launch} />
+    <Scene key="Tabbar" tabs={true} title="Favorite Stations" default="Favorite" initial={!true} style={{ backgroundColor: '#fff' }} type='replace'>
+      <Scene key="Main" title="Main" iconName={"location-on"} hideNavBar={true} icon={TabIcon} component={Main} region={uistore.region} />
+      <Scene key="Favorite" iconName={"star"} icon={TabIcon} component={Love} uistore={uistore} />
+      <Scene key="History" title="History" iconName={"history"} icon={TabIcon} hideNavBar={false} component={Launch} />
+      <Scene key="Settings" title="Settings" iconName={"account-circle"} icon={TabIcon} hideNavBar={false} component={Launch} />
     {/*
       <Scene key="Main" title="main" iconName={"home"} icon={TabIcon} hideNavBar={false} component={Main} initial={true} />
       <Scene key="Login" component={fn('Login')} title="Login" type="replace" />
@@ -124,13 +109,16 @@ const scenes = Actions.create(
   </Scene>
 )
 
+
 export default function app(platform: string) {
 
-  // TODO initialize store
   let WonderFUEL = React.createClass( {
+    componentDidMount() {
+      uistore.setup();
+    },
+
     render() {
-      // setup the router table with App selected as the initial component
-      return <Router scenes={scenes} hideNavBar={true} sceneStyle={{backgroundColor:'#F7F7F7'}} />
+      return <Router scenes={scenes} sceneStyle={{backgroundColor:'#F7F7F7'}} />;
     }
   });
   /**

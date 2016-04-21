@@ -21,7 +21,7 @@ class Digit extends React.Component {
     const { content } = this.props;
     // if (content instanceof React.Component)
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', borderRadius: 30, borderWidth: 1,  width:64, height: 64}}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', borderRadius: 30, borderWidth: 1,  width:'30%', height: 64}}>
         <Text style={{ backgroundColor: 'transparent', fontSize: 24}}>
         { content }
         </Text>
@@ -41,7 +41,13 @@ export default class Input extends React.Component {
         888.9
         </Text>
         <View style={{flex: 1}}>
-          <View style={{flexDirection: 'row', borderWidth:1, borderColor: 'yellow'}}>
+          <View style={{flexDirection: 'row', flexWrap: true, borderWidth:1, borderColor: 'yellow'}}>
+            <Digit content={1} />
+            <Digit content={2} />
+            <Digit content={3} />
+            <Digit content={1} />
+            <Digit content={2} />
+            <Digit content={3} />
             <Digit content={1} />
             <Digit content={2} />
             <Digit content={3} />
