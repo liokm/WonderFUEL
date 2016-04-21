@@ -96,10 +96,18 @@ class TabIcon extends React.Component {
 //   }
 // }
 
+
+// Components
+import Launch from './components/Launch';
+import Main from './components/Main';
+import Input from './components/Input';
+
+const initial = Input;
 // Scene
 const scenes = Actions.create(
   <Scene key="root">
-    <Scene key="Launch" component={Launch} title="App" initial={true} />
+    <Scene key="Input" component={Input} initial={initial==Input} />
+    <Scene key="Launch" component={Launch} title="App" initial={initial==Launch} />
     <Scene key="Tabbar" tabs={true} default="Main" initial={!true} style={{ backgroundColor: '#fff' }} type='replace'>
       <Scene key="Main" iconName={"location-on"} icon={TabIcon} component={Main} />
       <Scene key="Main3" iconName={"star"} icon={TabIcon} hideNavBar={false} component={Main} />
@@ -115,10 +123,6 @@ const scenes = Actions.create(
     </Scene>
   </Scene>
 )
-
-// Components
-import Launch from './components/Launch';
-import Main from './components/Main';
 
 export default function app(platform: string) {
 
