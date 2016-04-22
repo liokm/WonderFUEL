@@ -3,6 +3,7 @@
  */
 
 import React, {
+  PixelRatio,
   AppRegistry,
   Navigator,
   View,
@@ -36,7 +37,7 @@ class Love extends React.Component {
       <View style={{flex: 1, paddingTop: 64}}>
       {
         stations.map((row, i) => (
-          <View style={{ padding: 8, borderColor: 'grey', borderBottomWidth: 1}} key={`lov${i}`}>
+          <View style={{ padding: 8, borderColor: 'grey', borderBottomWidth: 1/PixelRatio.get()}} key={`lov${i}`}>
             <TouchableOpacity onPress={() => { uistore.region.updatePoint(row.latitude, row.longitude); Actions.Main() }}>
               <Text style={{ fontSize:16 }}>{row.name}</Text>
               <Text style={{ fontSize:12, color: '#444'}}>{row.vicinity}</Text>

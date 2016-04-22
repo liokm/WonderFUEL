@@ -42,7 +42,7 @@ class Settings extends React.Component {
         </View>
       {
         items.map((row, i) => (
-          <View style={{ padding: 8, borderColor: 'grey', borderBottomWidth: 1}} key={`his${i}`} >
+          <View style={{ padding: 8, borderColor: 'grey', borderBottomWidth: 1/PixelRatio.get()}} key={`his${i}`} >
             <TouchableOpacity onPress={() => { uistore.region.updatePoint(row.latitude, row.longitude); Actions.Main() }}>
               <Text style={{ fontSize:16, marginBottom: 4 }}><Text style={{color: '#ff8c0b'}}>${row.price}</Text>/L on {row.date.format('MMMM DD, h:mm:ss a')}</Text>
               <Text style={{ fontSize:12, color: '#444'}}>{row.name} @ {row.vicinity}</Text>
