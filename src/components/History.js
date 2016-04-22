@@ -3,6 +3,7 @@
  */
 
 import React, {
+  PixelRatio,
   AppRegistry,
   Navigator,
   View,
@@ -19,31 +20,32 @@ import { uistore } from '../stores';
 import { observer } from 'mobx-react/native';
 
 @observer
-class Love extends React.Component {
+class History extends React.Component {
   render() {
     const uistore = this.props.uistore;
-    const { mem_stations, liked_stations } = uistore;
-    const stations = [];
+    const { mem_stations, liked_stations, history } = uistore;
 
-    liked_stations.forEach(id => {
+    const items = [];
+
+    history.forEach(({id, price, date}) => {
       if (id in mem_stations) {
-        stations.push(mem_stations[id]);
+        const { name, vicinity, latitude, longitude } = mem_stations[id];
+        items.push({price, date, name, vicinity, latitude, longitude});
       }
     });
     // console.log(stations);
 
     return (
-      <View style={{flex: 1, paddingTop: 64}}>
+      <View style={{flex: 1, paddingTop: 0}}>
+        <View style={{ paddingTop: 30, height: 64, alignItems: 'center', backgroundColor: '#efeff2', borderColor: '#828287', borderBottomWidth: 1/PixelRatio.get()}}>
+          <Text style={{ fontSize: 18, fontWeight: '500'}}>Filling-up History</Text>
+        </View>
       {
-        stations.map((row, i) => (
-          <View style={{ padding: 8, borderColor: 'grey', borderBottomWidth: 1}} key={`lov${i}`}>
+        items.map((row, i) => (
+          <View style={{ padding: 8, borderColor: 'grey', borderBottomWidth: 1}} key={`his${i}`} >
             <TouchableOpacity onPress={() => { uistore.region.updatePoint(row.latitude, row.longitude); Actions.Main() }}>
-              <Text style={{ fontSize:16 }}>{row.name}</Text>
-              <Text style={{ fontSize:12, color: '#444'}}>{row.vicinity}</Text>
-              <View style={{ flexDirection: 'row', marginTop: 4}}>
-                <Text style={{ flex: 1, color: '#000'}}>Diesel <Text style={{ color: '#ff8c0b'}}>{row.price_diesel}</Text></Text>
-                <Text style={{ flex: 1, color: '#000'}}>91 Regular <Text style={{ color: '#ff8c0b'}}>{row.price_91}</Text></Text>
-              </View>
+              <Text style={{ fontSize:16, marginBottom: 4 }}><Text style={{color: '#ff8c0b'}}>${row.price}</Text>/L on {row.date.format('MMMM DD, h:mm:ss a')}</Text>
+              <Text style={{ fontSize:12, color: '#444'}}>{row.name} @ {row.vicinity}</Text>
             </TouchableOpacity>
           </View>
         ))
@@ -69,4 +71,4 @@ class Love extends React.Component {
   }
 }
 
-export default Love;
+export default History;

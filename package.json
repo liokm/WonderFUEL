@@ -10,6 +10,7 @@
     "babel-preset-react-native-stage-0": "^1.0.1",
     "mobx": "^2.1.4",
     "mobx-react": "^3.0.4",
+    "momentjs": "^1.1.6",
     "react": "^0.14.8",
     "react-native": "^0.22.2",
     "react-native-maps": "^0.3.2",

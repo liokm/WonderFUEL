@@ -85,6 +85,8 @@ import Launch from './components/Launch';
 import Main from './components/Main';
 import Input from './components/Input';
 import Love from './components/Love';
+import History from './components/History';
+import Settings from './components/Settings';
 
 
 const initial = Launch;
@@ -96,8 +98,8 @@ const scenes = Actions.create(
     <Scene key="Tabbar" tabs={true} title="Favorite Stations" default="Favorite" initial={!true} style={{ backgroundColor: '#fff' }} type='replace'>
       <Scene key="Main" title="Main" iconName={"location-on"} hideNavBar={true} icon={TabIcon} component={Main} region={uistore.region} />
       <Scene key="Favorite" iconName={"star"} icon={TabIcon} component={Love} uistore={uistore} />
-      <Scene key="History" title="History" iconName={"history"} icon={TabIcon} hideNavBar={false} component={Launch} />
-      <Scene key="Settings" title="Settings" iconName={"account-circle"} icon={TabIcon} hideNavBar={false} component={Launch} />
+      <Scene key="History" title="History" iconName={"history"} icon={TabIcon} hideNavBar={true} component={History} uistore={uistore} />
+      <Scene key="Settings" title="Settings" iconName={"account-circle"} icon={TabIcon} hideNavBar={true} component={Settings} uistore={uistore} />
     {/*
       <Scene key="Main" title="main" iconName={"home"} icon={TabIcon} hideNavBar={false} component={Main} initial={true} />
       <Scene key="Login" component={fn('Login')} title="Login" type="replace" />

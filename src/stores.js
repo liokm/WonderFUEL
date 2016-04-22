@@ -14,6 +14,7 @@ import React, {
 
 import { observable, asStructure, asReference } from 'mobx';
 import { observer } from 'mobx-react/native';
+import moment from 'moment';
 
 const LANDSCAPE = 'LANDSCAPE';
 const PORTRAIT = 'PORTRAIT';
@@ -39,7 +40,9 @@ class UIStore {
   @observable orientation:string = PORTRAIT;
   // XXX: Kelvin convinced me not to use realm.io, YES SIR!
   mem_stations = {};
-  @observable liked_stations = [];
+  // @observable liked_stations = [];
+  liked_stations = [];
+  history = [];
 
   region = observable({
     latitude: null,
@@ -65,7 +68,7 @@ class UIStore {
     toCurrent: asReference(function() {
       navigator.geolocation.getCurrentPosition(
         ({coords}) => Object.assign(this, coords),
-        error => { debugger; Alert.alert(`Can't get the location.\nPlease check the settings to allow the access.`) },
+        error => { Alert.alert(`Can't get the location.\nPlease check the settings to allow the access.`) },
         { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
       );
     }),
@@ -84,6 +87,9 @@ class UIStore {
       }
       const radius = this.distance(this.latitude, this.longitude, this.latitude + this.latitudeDelta, this.longitude + this.longitudeDelta) * 1000;
       const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.latitude},${this.longitude}&radius=${radius}&type=gas_station&key=AIzaSyBadH6rJAYCU22EBfeZO2gFXMa7h3HTRG0`;
+      // const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.latitude},${this.longitude}&radius=${radius}&type=gas_station&key=AIzaSyAnPuKVARCaBlMbCiVL2vy9Ao7m4qJQTW8`;
+      console.log(url);
+
       fetch(url)
       .then(data => data.json())
       .then(({results, status}) => {
@@ -91,9 +97,13 @@ class UIStore {
           results.forEach(({id, name, vicinity, geometry: { location: {lat, lng}}}) => {
             // XXX: update in memory and fake data!!!
             if (!(id in uistore.mem_stations)) {
-              uistore.mem_stations[id] = {name, vicinity, latitude: lat, longitude: lng, price_diesel: getRandomInt(80, 120) + .9, price_91: getRandomInt(130, 190) + .9, price_95: getRandomInt(150, 240) + .9, isLiked: false};
+              const price_diesel = getRandomInt(80, 120) + .9;
+              uistore.mem_stations[id] = {name, vicinity, latitude: lat, longitude: lng, price_diesel, price_91: getRandomInt(130, 190) + .9, price_95: getRandomInt(150, 240) + .9, isLiked: false};
               if (Math.random() > 0.8) {
                 uistore.liked_stations.push(id);
+              }
+              if (Math.random() > 0.8) {
+                uistore.history.push({id, price: price_diesel, date: moment()});
               }
             }
           });
