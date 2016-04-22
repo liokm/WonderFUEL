@@ -3,6 +3,7 @@
  */
 
 import React, {
+  Animated,
   PixelRatio,
   AppRegistry,
   Navigator,
@@ -18,6 +19,7 @@ import { Actions } from 'react-native-router-flux';
 // import Icon from 'react-native-vector-icons/MaterialIcons';
 import { uistore } from '../stores';
 import { observer } from 'mobx-react/native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 @observer
 class Settings extends React.Component {
@@ -40,8 +42,14 @@ class Settings extends React.Component {
         <View style={{ paddingTop: 30, height: 64, alignItems: 'center', backgroundColor: '#efeff2', borderColor: '#828287', borderBottomWidth: 1/PixelRatio.get()}}>
           <Text style={{ fontSize: 18, fontWeight: '500'}}>Settings</Text>
         </View>
+        <View>
+        <Text style={{ fontSize: 16, textAlign: 'center', marginBottom: 4 }}>TBD</Text>
+        <Text style={{ fontSize: 16, textAlign: 'center', marginBottom: 4 }}>Diesel</Text>
+        <Text style={{ fontSize: 16, textAlign: 'center', marginBottom: 4 }}>91 Regular</Text>
+        <Text style={{ fontSize: 18, textAlign: 'center', marginBottom: 4 }}>Sorry, Tesla & Lamborghini <Icon style={{ color: '#e60000'}} name='tag-faces' size={14} /></Text>
+        </View>
       {
-        items.map((row, i) => (
+        /*
           <View style={{ padding: 8, borderColor: 'grey', borderBottomWidth: 1/PixelRatio.get()}} key={`his${i}`} >
             <TouchableOpacity onPress={() => { uistore.region.updatePoint(row.latitude, row.longitude); Actions.Main() }}>
               <Text style={{ fontSize:16, marginBottom: 4 }}><Text style={{color: '#ff8c0b'}}>${row.price}</Text>/L on {row.date.format('MMMM DD, h:mm:ss a')}</Text>
@@ -49,6 +57,7 @@ class Settings extends React.Component {
             </TouchableOpacity>
           </View>
         ))
+        */
       }
         {/*
           stations.length?

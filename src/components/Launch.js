@@ -29,9 +29,12 @@ class Launch extends React.Component {
     const { width, height } = this.props;
 
     return (
-      <View style={{flex: 1, borderColor:'red', borderWidth:1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{fontSize: 18}} onPress={Actions.Tabbar}>
-        WonderFUEL
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={{fontSize: 32}} onPress={Actions.Tabbar}>
+        Wonder
+        <Text style={{  fontWeight: 'bold'}}>FU</Text>
+        <Text style={{ color: '#e60000', fontWeight: 'bold'}}>E</Text>
+        <Text style={{  fontWeight: 'bold'}}>L</Text>
         </Text>
       {/*
         <Icon name='location-on' size={30} />
