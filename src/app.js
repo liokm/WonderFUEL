@@ -19,11 +19,13 @@
  * Necessary components from ReactNative
  */
 import React, {
+  Dimensions,
   AppRegistry,
   Navigator,
   View,
   AlertIOS,
-  Text} from 'react-native';
+  Text
+} from 'react-native';
 
 /**
  * ### Router-Flux
@@ -35,7 +37,8 @@ import RNRF, {
   Route,
   Scene,
   Actions,
-  TabBar} from 'react-native-router-flux';
+  TabBar
+} from 'react-native-router-flux';
 
 /**
  * ### mobx
@@ -88,11 +91,23 @@ import Love from './components/Love';
 import History from './components/History';
 import Settings from './components/Settings';
 
+class Foo extends React.Component {
+  render() {
+    const { layout } = this.props;
+    return (
+      <View style={{alignItems: 'center', flex: 1, justifyContent: 'center'}}>
 
-const initial = Launch;
+        <Text>{JSON.stringify(layout)}</Text>
+      </View>
+    );
+  }
+}
+
+const initial = Foo;
 // Scene
 const scenes = Actions.create(
   <Scene key="root">
+    <Scene key="Input2" component={Foo} initial={initial==Foo} hideNavBar={true} layout={ uistore.layout }/>
     <Scene key="Input" component={Input} initial={initial==Input} />
     <Scene key="Launch" component={Launch} hideNavBar={true} title="WonderFUEL" initial={initial==Launch} />
     <Scene key="Tabbar" tabs={true} title="Favorite Stations" default="Favorite" initial={!true} style={{ backgroundColor: '#fff' }} type='replace'>
@@ -116,11 +131,19 @@ export default function app(platform: string) {
 
   let WonderFUEL = React.createClass( {
     componentDidMount() {
+      console.log(Dimensions.get('window'));
       uistore.setup();
     },
 
     render() {
-      return <Router scenes={scenes} sceneStyle={{backgroundColor:'#F7F7F7'}} />;
+      // return <View onLayout={ () => console.log.bind(console)}>
+      // return <View onLayout={ () => console.log(Dimensions.get('window')) }>
+      return (
+        <View style={{flex: 1}} onLayout={ e => uistore.onLayout(e) }>
+          <Router scenes={scenes} sceneStyle={{backgroundColor:'#F7F7F7'}} />
+        </View>
+      );
+      // return <Router scenes={scenes} sceneStyle={{backgroundColor:'#F7F7F7'}} />;
     }
   });
   /**

@@ -10,9 +10,10 @@ import React, {
   Navigator,
   View,
   Alert,
-  Text} from 'react-native';
+  Text
+} from 'react-native';
 
-import { observable, asStructure, asReference } from 'mobx';
+import { observable, computed, asStructure, asReference } from 'mobx';
 import { observer } from 'mobx-react/native';
 import moment from 'moment';
 
@@ -35,6 +36,16 @@ class GasStation {
 }
 
 class UIStore {
+  // Object {width: 1024, height: 768, scale: 2, fontScale: 2}
+  @observable layout: { width: number, height: number } = asStructure({
+    width: 0,
+    height: 0
+  });
+
+  @computed get orientation() {
+    return this.layout.width >= this.layout.height? LANDSCAPE: PORTRAIT;
+  }
+
   @observable width:number = 0;
   @observable height:number = 0;
   @observable orientation:string = PORTRAIT;
@@ -124,10 +135,8 @@ class UIStore {
 
   }
 
-  onLayout({nativeEvent: {layout: {width, height}}}) {
-    this.width = width;
-    this.height = height;
-    this.orientation = width > height? LANDSCAPE: PORTRAIT;
+  onLayout({nativeEvent: {layout: {width, height}}}: {nativeEvent: {layout: {width: number, height: number}}}) {
+    Object.assign(this.layout, {width, height});
   }
 }
 

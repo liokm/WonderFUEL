@@ -8,8 +8,8 @@
   "dependencies": {
     "apsl-react-native-button": "^2.4.2",
     "babel-preset-react-native-stage-0": "^1.0.1",
-    "mobx": "^2.1.4",
-    "mobx-react": "^3.0.4",
+    "mobx": "^2.1.6",
+    "mobx-react": "^3.1.0",
     "momentjs": "^1.1.6",
     "react": "^0.14.8",
     "react-native": "^0.22.2",
